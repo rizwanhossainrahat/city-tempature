@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="input-location" type="text" class="form-control"
+                    placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button id="search-btn" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1><span id="city">Dhaka</span></h1>
+            <h3><span id="temperature">38.06</span>&deg;C</h3>
+            <h1 class="lead"> <span id="weatherCondition">Clouds</span></h1>
+        </div>
+    </div>
+    <script>
+           
+            document.getElementById('search-btn').addEventListener('click',function(){
+                const inputLocation=document.getElementById('input-location').value;
+                
+                fetch('https://api.openweathermap.org/data/2.5/weather?q='+inputLocation+'&appid=9b5f7b3a30d322f62d7c89dd16f6352f')
+                .then(res=>res.json())
+                .then(data=>{
+                    console.log(data);
+                   const name=data.name;
+                   const temp=data.main.temp;
+                   const tempNew=temp-273;
+                   const weatherCondition=data.weather[0].description;
+                   document.getElementById('city').innerText=name;
+                   document.getElementById('temperature').innerText=tempNew.toFixed(2);
+                   document.getElementById('weatherCondition').innerText=weatherCondition;
+                })
+            });
+        
+       
+    </script>
+
+</body>
+
+
+</html>
